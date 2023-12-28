@@ -4,8 +4,32 @@
 #include <time.h>
 
 char board[3][3];
-const char PLAYER = 'X';
-const char COMPUTER = 'O';
+char player;
+char computer;
+
+void chooseCharacter()
+{
+    do
+    {
+        printf("\nChoose your symbol (X/O): ");
+        scanf(" %c", &player);
+        player = toupper(player);
+        getchar();
+        
+        if(player == 'X')
+        {
+            computer = 'O';
+        }
+        else if(player == 'O')
+        {
+            computer = 'X';
+        }
+        else {
+            printf("\nInvalid character! Choose only between X or O.\n");
+        }
+    } while (player != 'X' && player != 'O');
+    
+}
 
 void resetBoard()
 {
@@ -49,11 +73,11 @@ int checkFreeSpaces()
 
 void printWinner(char winner)
 {
-    if(winner == PLAYER)
+    if(winner == player)
     {
         printf("\nYOU WIN!\n");
     }
-    else if(winner == COMPUTER)
+    else if(winner == computer)
     {
         printf("\nYOU LOSE!\n");
     }
@@ -83,7 +107,7 @@ void playerMove()
         }
         else
         {
-            board[x][y] = PLAYER;
+            board[x][y] = player;
             break;
         }
     } while (board[x][y] != ' ');
@@ -105,7 +129,7 @@ void computerMove()
             y = rand() % 3;
         } while (board[x][y] != ' ');
         
-        board[x][y] = COMPUTER;
+        board[x][y] = computer;
     }
     else
     {
@@ -156,6 +180,7 @@ int main()
     {
         winner = ' ';
         response = ' ';
+        chooseCharacter();
         resetBoard();
     
         while(winner == ' ' && checkFreeSpaces() != 0)
